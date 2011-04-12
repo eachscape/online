@@ -1,0 +1,32 @@
+This gem will contain an extracted version of EachScape's OnlineStorage
+and OnlineQueue classes, renamed to Online::Storage and Online::Queue,
+respectively, but otherwise maintaining the existing API.
+
+The goal of this gem is to make it easy for external contractors to
+build an EachScape-compatible development environment, and to make
+it easier to decouple various worker daemons.
+
+== Configuration
+
+The following sources of information are automatically used to configure
+this gem:
+
+<code>ENV['AWS_ACCESS_KEY_ID']</code>:: Amazon credentials (required).
+<code>ENV['AWS_SECRET_ACCESS_KEY']</code>:: Amazon credentials (required).
+<code>ENV['ONLINE_BUCKET_PREFIX']</code>::
+  By default, bucket names will begin with 'com.eachscape'.  If you're
+  using your own S3 credentials, you will want to set this to something
+  based on your own domain name, such as 'com.example'.
+<code>ENV['USER']</code>::
+  This will be appended to certain bucket names in the development environment.
+<code>Rails.env</code>::
+  If present, this will be used to determine the environment name.  If absent,
+  it defaults to 'development'.
+
+You can also override the bucket prefix or the environment using Ruby code:
+
+  Online.env = 'production'
+  Online.bucket_prefix = 'com.example'
+
+
+  
