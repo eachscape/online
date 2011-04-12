@@ -27,6 +27,3 @@ You can also override the bucket prefix or the environment using Ruby code:
 
   Online.env = 'production'
   Online.bucket_prefix = 'com.example'
-
-
-  
