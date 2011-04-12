@@ -45,11 +45,19 @@ class TestOnlineStorage < Test::Unit::TestCase
 
   def test_bucket_name_for_should_build_appropriate_bucket_names
     examples = [{
-      :for => :s3,
-      :env => 'production',
-      :bucket_prefix => 'com.example.three',
-      :expected => 'com.example.three.production'
-    }]
+       :for => :s3,
+       :env => 'production',
+       :bucket_prefix => 'com.example.three',
+       :expected => 'com.example.three.production'
+     }, {
+       :for => :s3_cdn,
+       :env => 'production',
+       :expected => 'com.eachscape.cdn.production'
+     }, {
+       :for => :queue,
+       :env => 'live',
+       :expected => 'com.eachscape.queue'
+     }]
 
     # :for => :s3_cdn,
     # :for => :queue,

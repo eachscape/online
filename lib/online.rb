@@ -26,8 +26,20 @@ module Online
 
     # Compute a bucket name for the specified storage type.
     def bucket_name_for(storage_type)
-      raise ArgumentError unless [:s3].include?(storage_type)
-      [bucket_prefix, env].join('.')
+      pieces = [bucket_prefix]
+
+      case storage_type
+      when :s3
+        pieces << env
+      when :s3_cdn
+        pieces << 'cdn'
+        pieces << env
+      when :queue
+        pieces << 'queue'
+      else raise ArgumentError
+      end
+        
+      pieces.join('.')
     end
   end
 end
