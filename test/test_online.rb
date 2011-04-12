@@ -1,9 +1,17 @@
 require 'test_helper'
 
-class TestOnlineStorage < Test::Unit::TestCase
+class TestOnline < Test::Unit::TestCase
   def setup
     # Save the values we use to compute our configuration.
     @saved_online_bucket_prefix = ENV['ONLINE_BUCKET_PREFIX']
+
+    # Set the values we use to compute our configuration to a known state.
+    ENV['ONLINE_BUCKET_PREFIX'] = nil
+    Online.env = nil
+    Online.bucket_prefix = nil
+
+    # Turn off mocking.
+    Online.mock!(false)
   end
 
   def teardown
@@ -11,6 +19,9 @@ class TestOnlineStorage < Test::Unit::TestCase
     ENV['ONLINE_BUCKET_PREFIX'] = @saved_online_bucket_prefix
     Online.env = nil
     Online.bucket_prefix = nil
+
+    # Turn off mocking.
+    Online.mock!(false)
   end
 
   def test_env_should_default_to_test_if_no_rails_env
@@ -80,5 +91,15 @@ class TestOnlineStorage < Test::Unit::TestCase
       Online.bucket_prefix = example[:bucket_prefix]
       assert_equal example[:expected], Online.bucket_name_for(example[:for])
     end
+  end
+
+  def test_storage_class_should_return_storage_if_not_mocked
+    Online.mock!(false)
+    assert_equal Online::Storage, Online.storage_class
+  end
+
+  def test_storage_class_should_return_mock_storage_if_mocked
+    Online.mock!
+    assert_equal Online::Test::MockStorage, Online.storage_class
   end
 end

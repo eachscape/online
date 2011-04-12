@@ -27,3 +27,20 @@ You can also override the bucket prefix or the environment using Ruby code:
 
   Online.env = 'production'
   Online.bucket_prefix = 'com.example'
+
+== Mock implementation for testing
+
+If you're writing unit tests, and you want to use a mock implementation of
+the Online gem, you can call:
+
+  Online.mock!
+
+This will allow you to run unit tests without touching S3.  To run this
+once before loading any unit tests, put it in
+<code>test/support/mock_online.rb</code> (at least on newer versions of
+Rails).
+
+To turn off mocking, call:
+
+  Online.mock!(false)
+

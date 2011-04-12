@@ -51,6 +51,22 @@ module Online
       pieces.join('.')
     end
 
+    # Enable (or disable) mock objects for this library.
+    def mock!(mock=true)
+      require 'online/test' unless defined?(Online::Test)
+      @mocked = mock
+    end
+
+    # Return either Online::Storage, or a mock implementation of the same
+    # API, depending on whether or not we're currently mocked.
+    def storage_class
+      if @mocked
+        Online::Test::MockStorage
+      else
+        Online::Storage
+      end
+    end
+
     protected
 
     # In the development environment, we give each user their own bucket.
@@ -62,3 +78,5 @@ module Online
     end
   end
 end
+
+require 'online/storage'
