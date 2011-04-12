@@ -1,7 +1,5 @@
-module Online
-  # Unit-testing support for the Online module.
-  module Test
-  end
+# Unit-testing support for the Online module.
+module Online::Test
 end
 
 require 'online/test/mock_storage'
