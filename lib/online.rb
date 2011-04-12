@@ -23,5 +23,11 @@ module Online
 
     # Set the bucket prefix.
     attr_writer :bucket_prefix
+
+    # Compute a bucket name for the specified storage type.
+    def bucket_name_for(storage_type)
+      raise ArgumentError unless [:s3].include?(storage_type)
+      [bucket_prefix, env].join('.')
+    end
   end
 end

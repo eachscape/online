@@ -38,4 +38,26 @@ class TestOnlineStorage < Test::Unit::TestCase
     Online.bucket_prefix = 'com.example.two'
     assert_equal 'com.example.two', Online.bucket_prefix
   end
+
+  def test_bucket_name_for_should_raise_an_error_if_storage_type_is_unknown
+    assert_raises(ArgumentError) { Online.bucket_name_for(:unknown) }
+  end
+
+  def test_bucket_name_for_should_build_appropriate_bucket_names
+    examples = [{
+      :for => :s3,
+      :env => 'production',
+      :bucket_prefix => 'com.example.three',
+      :expected => 'com.example.three.production'
+    }]
+
+    # :for => :s3_cdn,
+    # :for => :queue,
+      
+    for example in examples
+      Online.env = example[:env]
+      Online.bucket_prefix = example[:bucket_prefix]
+      assert_equal example[:expected], Online.bucket_name_for(example[:for])
+    end
+  end
 end
