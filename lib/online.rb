@@ -36,6 +36,14 @@ module Online
         pieces << env_and_maybe_user
       when :queue
         pieces << 'queue'
+        case env
+        when 'live'
+          # Do nothing.
+        when 'development'
+          pieces << 'staging'
+        else
+          pieces << env
+        end
       else
         raise ArgumentError
       end

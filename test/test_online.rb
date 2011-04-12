@@ -65,6 +65,14 @@ class TestOnlineStorage < Test::Unit::TestCase
        :for => :queue,
        :env => 'live',
        :expected => 'com.eachscape.queue'
+     }, {
+       :for => :queue,
+       :env => 'development',
+       :expected => 'com.eachscape.queue.staging' # Yes, staging.
+     }, {
+       :for => :queue,
+       :env => 'staging',
+       :expected => 'com.eachscape.queue.staging'
      }]
 
     for example in examples
