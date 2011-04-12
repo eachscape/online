@@ -1,16 +1,16 @@
 require 'test_helper'
 
-class OnlineStorageTest < ActiveSupport::TestCase
+class TestOnlineStorage < Test::Unit::TestCase
   # This tests REAL online storage, not MockOnlineStorage
   def setup
-    @s3 = OnlineStorage.new(:s3)
+    @s3 = Online::Storage.new(:s3)
     @s3.empty_bucket
-    @cdn = OnlineStorage.new(:s3_cdn)
+    @cdn = Online::Storage.new(:s3_cdn)
     @cdn.empty_bucket
   end
 
   def test_bad_type
-    assert_raises(ArgumentError) {OnlineStorage.new(:foo)}
+    assert_raises(ArgumentError) {Online::Storage.new(:foo)}
   end
 
   def test_create
@@ -58,5 +58,4 @@ class OnlineStorageTest < ActiveSupport::TestCase
     assert_equal 2, @s3.keys('foo/').size
     assert_equal 1, @cdn.keys('foo/').size
   end
-
 end
