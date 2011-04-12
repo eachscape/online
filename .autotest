@@ -1,0 +1,9 @@
+require 'autotest/restart'
+
+Autotest.add_hook :initialize do |autotest|
+  %w(.git .DS_Store ._* *~).each do |exception|
+    autotest.add_exception(exception)
+  end
+end
+
+#Autotest.add_mapping(%{lib/online/
