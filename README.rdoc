@@ -33,6 +33,7 @@ You can also override the bucket prefix or the environment using Ruby code:
 If you're writing unit tests, and you want to use a mock implementation of
 the Online gem, you can call:
 
+  Online.mock_storage_directory = Rails.configuration.storage_root
   Online.mock!
 
 This will allow you to run unit tests without touching S3.  To run this

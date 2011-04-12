@@ -22,6 +22,9 @@ module Online
     # Set the bucket prefix.
     attr_writer :bucket_prefix
 
+    # The directory in which to store mock S3 objects during testing.
+    attr :mock_storage_directory, :writable? => true
+
     # Compute a bucket name for the specified storage type.
     def bucket_name_for(storage_type)
       pieces = [bucket_prefix]
@@ -62,6 +65,18 @@ module Online
         Online::Test::MockStorage
       else
         Online::Storage
+      end
+    end
+
+    # Return the directory that we'll use to mock the specified bucket.
+    # Since we'll be using this directory heavily, we're careful to only
+    # return a path if the user has specified
+    # <code>mock_storage_directory</code>.
+    def mock_storage_directory_for(bucket_name)
+      if mock_storage_directory
+        "#{mock_storage_directory}/#{bucket_name}/"
+      else
+        raise ArgumentError.new("No Online.mock_storage_directory specified")
       end
     end
 

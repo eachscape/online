@@ -4,6 +4,7 @@ class TestOnline < Test::Unit::TestCase
   def setup
     # Save the values we use to compute our configuration.
     @saved_online_bucket_prefix = ENV['ONLINE_BUCKET_PREFIX']
+    @saved_mock_storage_directory = Online.mock_storage_directory
 
     # Set the values we use to compute our configuration to a known state.
     ENV['ONLINE_BUCKET_PREFIX'] = nil
@@ -17,6 +18,7 @@ class TestOnline < Test::Unit::TestCase
   def teardown
     # Restore the values we use to compute our configuration.
     ENV['ONLINE_BUCKET_PREFIX'] = @saved_online_bucket_prefix
+    Online.mock_storage_directory = @saved_mock_storage_directory
     Online.env = nil
     Online.bucket_prefix = nil
 
@@ -105,5 +107,16 @@ class TestOnline < Test::Unit::TestCase
   def test_storage_class_should_return_mock_storage_if_mocked
     Online.mock!
     assert_equal Online::Test::MockStorage, Online.storage_class
+  end
+
+  def test_mock_storage_directory_for_should_return_a_directory
+    Online.mock_storage_directory = "/tmp/foo"
+    assert_equal("/tmp/foo/bucket/",
+                 Online.mock_storage_directory_for('bucket'))
+  end
+
+  def test_mock_storage_directory_for_should_fail_if_no_mock_storage_directory
+    Online.mock_storage_directory = nil
+    assert_raises(ArgumentError) { Online.mock_storage_directory_for('bucket') }
   end
 end
