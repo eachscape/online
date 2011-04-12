@@ -1,5 +1,3 @@
-require 'aws/s3'
-
 # An interface to S3, with support for storing files and communicating via
 # message queues.
 module Online
