@@ -65,6 +65,10 @@ class TestOnline < Test::Unit::TestCase
        :env => 'development',
        :expected => "com.eachscape.development.#{ENV['USER']}"
      }, {
+       :for => :s3,
+       :env => 'test',
+       :expected => "com.eachscape.test.#{ENV['USER']}"
+     }, {
        :for => :s3_cdn,
        :env => 'production',
        :expected => 'com.eachscape.cdn.production'

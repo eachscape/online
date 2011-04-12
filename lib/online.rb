@@ -70,7 +70,7 @@ module Online
     # In the development environment, we give each user their own bucket.
     def env_and_maybe_user
       case env
-      when 'development' then "#{env}.#{ENV['USER']}"
+      when 'development', 'test' then "#{env}.#{ENV['USER']}"
       else env
       end
     end
