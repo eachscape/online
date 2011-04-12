@@ -50,18 +50,23 @@ class TestOnlineStorage < Test::Unit::TestCase
        :bucket_prefix => 'com.example.three',
        :expected => 'com.example.three.production'
      }, {
+       :for => :s3,
+       :env => 'development',
+       :expected => "com.eachscape.development.#{ENV['USER']}"
+     }, {
        :for => :s3_cdn,
        :env => 'production',
        :expected => 'com.eachscape.cdn.production'
+     }, {
+       :for => :s3_cdn,
+       :env => 'development',
+       :expected => "com.eachscape.cdn.development.#{ENV['USER']}"
      }, {
        :for => :queue,
        :env => 'live',
        :expected => 'com.eachscape.queue'
      }]
 
-    # :for => :s3_cdn,
-    # :for => :queue,
-      
     for example in examples
       Online.env = example[:env]
       Online.bucket_prefix = example[:bucket_prefix]

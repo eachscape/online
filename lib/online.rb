@@ -30,16 +30,27 @@ module Online
 
       case storage_type
       when :s3
-        pieces << env
+        pieces << env_and_maybe_user
       when :s3_cdn
         pieces << 'cdn'
-        pieces << env
+        pieces << env_and_maybe_user
       when :queue
         pieces << 'queue'
-      else raise ArgumentError
+      else
+        raise ArgumentError
       end
         
       pieces.join('.')
+    end
+
+    protected
+
+    # In the development environment, we give each user their own bucket.
+    def env_and_maybe_user
+      case env
+      when 'development' then "#{env}.#{ENV['USER']}"
+      else env
+      end
     end
   end
 end
