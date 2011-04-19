@@ -41,12 +41,8 @@ once before loading any unit tests, put it in
 <code>test/support/mock_online.rb</code> (at least on newer versions of
 Rails).
 
-*WARNING:* The current version of MockStorage depends on global variables
-in SimulatedS3Object, and so you can only create one MockStorage object at
-a time.  If you need to test S3 and the CDN at the same time, you'll need
-to do some more work on this code.
-
 To turn off mocking, call:
 
   Online.mock!(false)
 
+You may turn mocking off and on as often as you'd like.

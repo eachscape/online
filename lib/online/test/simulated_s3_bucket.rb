@@ -1,13 +1,13 @@
 module Online::Test
   class SimulatedS3Bucket
-    def initialize(name, path)
-      @name = name
-      @path = path
-    end
+    attr_reader :global_state
 
-    def self.find(name = nil)
+    def initialize(name)
       raise ArgumentError unless name  # We don't support nil name
-      self.new(name, SimulatedS3GlobalState.current_bucket_path)
+      @name = name
+      @global_state = SimulatedS3GlobalState.new
+      @global_state.set_current_bucket_to(name)
+      @path = @global_state.current_bucket_path
     end
 
     def delete(options)

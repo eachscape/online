@@ -4,6 +4,8 @@ module OnlineStorageTests
   def setup
     @s3 = Online.storage_class.new(:s3)
     @s3.empty_bucket
+    @cdn = Online.storage_class.new(:s3_cdn)
+    @cdn.empty_bucket
   end
 
   def test_bad_type
@@ -46,5 +48,13 @@ module OnlineStorageTests
     @s3.write('foo2', 'This is the contents')
     @s3.objs('foo2').first.delete
     assert_equal 1, @s3.keys('').size
+  end
+
+  def test_2_instances
+    @s3.write('foo/bar1', 's3')
+    @cdn.write('foo/bar2', "cdn")
+    @s3.write('foo/bar3', 's3 again')
+    assert_equal 2, @s3.keys('foo/').size
+    assert_equal 1, @cdn.keys('foo/').size
   end
 end
