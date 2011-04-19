@@ -7,7 +7,7 @@ module Online::Test
 
     def self.find(name = nil)
       raise ArgumentError unless name  # We don't support nil name
-      self.new(name, SimulatedS3Object.current_bucket_path)
+      self.new(name, SimulatedS3GlobalState.current_bucket_path)
     end
 
     def delete(options)
@@ -40,7 +40,7 @@ module Online::Test
       result = []
       `find '#{@path}#{prefix}' -name '*' -type f`.split("\n").sort.each do |line|
         key = line[@path.size, 99999]
-        result << SimulatedS3Object.find(key, nil) if marker.nil? || (key > marker)
+        result << SimulatedS3GlobalState.find(key, nil) if marker.nil? || (key > marker)
         break if result.size >= max_keys
       end
       result
