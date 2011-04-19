@@ -1,9 +1,10 @@
 require 'test_helper'
 
-class OnlineQueueTest < ActiveSupport::TestCase
+class TestOnlineQueue < Test::Unit::TestCase
   # This tests real queues
   def setup
-    @queue = OnlineQueue.new('first')
+    Online.mock!
+    @queue = Online::Queue.new('first')
     @queue.purge_all_queues
   end
 
@@ -20,7 +21,7 @@ class OnlineQueueTest < ActiveSupport::TestCase
   end
 
   def test_two_queues
-    second = OnlineQueue.new('second')
+    second = Online::Queue.new('second')
     @queue.push 'a'
     second.push 'b'
     0.upto(100000) {|i| i} # spin your wheels for a bit

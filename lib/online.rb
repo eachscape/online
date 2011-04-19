@@ -93,3 +93,4 @@ module Online
 end
 
 require 'online/storage'
+require 'online/queue'

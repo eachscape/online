@@ -79,7 +79,8 @@ module Online
     end
   
     def empty_bucket
-      if @bucket_name =~ /\.(development|test)\.#{Regexp.quote(ENV['USER'])}$/
+      user = ENV['USER']
+      if @bucket_name =~ /\.(development|test)(\.#{Regexp.quote(user)})?$/
         @bucket.delete_all
       else
         raise 'Can only delete bucket in test/development environment ' + @bucket_name 
