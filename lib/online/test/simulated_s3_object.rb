@@ -2,7 +2,8 @@ module Online::Test
   class SimulatedS3Object
     include AWS::S3
 
-    def initialize(path)
+    def initialize(global_state, path)
+      @global_state = global_state
       @path = path
     end
 
@@ -54,7 +55,7 @@ module Online::Test
     end
 
     def bucket_path
-      SimulatedS3GlobalState.current_bucket_path
+      @global_state.current_bucket_path
     end
   end
 end

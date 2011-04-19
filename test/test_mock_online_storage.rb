@@ -1,7 +1,7 @@
 require 'test_helper'
 require 'online_storage_tests'
 
-class TestOnlineTestMockStorage < Test::Unit::TestCase
+class TestMockOnlineStorage < Test::Unit::TestCase
   include OnlineStorageTests
 
   def setup

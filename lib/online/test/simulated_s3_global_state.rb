@@ -7,7 +7,7 @@ module Online::Test
     def find(key, bucket)
       file_path = "#{bucket_path_to(bucket)}#{key}"
       raise AWS::S3::NoSuchKey.new("No such key '#{key}' at #{file_path}", nil) unless File.exist?(file_path)
-      SimulatedS3Object.new(file_path)
+      SimulatedS3Object.new(self, file_path)
     end
 
     def bucket_path_to(name)

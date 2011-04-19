@@ -40,7 +40,7 @@ module Online::Test
       result = []
       `find '#{@path}#{prefix}' -name '*' -type f`.split("\n").sort.each do |line|
         key = line[@path.size, 99999]
-        result << SimulatedS3GlobalState.find(key, nil) if marker.nil? || (key > marker)
+        result << global_state.find(key, nil) if marker.nil? || (key > marker)
         break if result.size >= max_keys
       end
       result
