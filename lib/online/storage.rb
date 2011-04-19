@@ -5,7 +5,7 @@ module Online
   class Storage
     include AWS::S3
   
-    MAX_AT_A_TIME = 800 # S3 limits us to 1000 at a time; we're playing it safe... see not in objs()
+    MAX_AT_A_TIME = 800 # S3 limits us to 1000 at a time; we're playing it safe... see note in objs()
 
     attr_reader :bucket_name
   
