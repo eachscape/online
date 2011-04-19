@@ -11,30 +11,31 @@ module Online
     # normally our S3 (Online::Storage) class writes to a bucket based on
     # the environment. Instead, we use a special bucket.
   
-    @@queue = Online::Storage.queue
-  
     def initialize(name)
+      # @queue used to be stored in a global variable, but we made it local
+      # so that we can turn mocking off and on again.
+      @queue = Online::Storage.queue
       @name = name
     end
   
     def purge_all_queues # Only for testing!
       if Online.env == 'test'
-        @@queue.empty_bucket 
+        @queue.empty_bucket 
       else
         raise "Can only purge all queues in the test environment"
       end
     end
   
     def push(message)
-      @@queue.write("#{@name}/#{(Time.now.utc.to_f * 10000).to_i}", message)
+      @queue.write("#{@name}/#{(Time.now.utc.to_f * 10000).to_i}", message)
     end
 
     def pop
       # It never blocks
-      keys = @@queue.keys("#{@name}/").sort
+      keys = @queue.keys("#{@name}/").sort
       keys.each do |key|
         begin
-          msg = @@queue.find(key)
+          msg = @queue.find(key)
           message = msg.value
           msg.delete
           return message
