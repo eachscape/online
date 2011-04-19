@@ -41,6 +41,10 @@ once before loading any unit tests, put it in
 <code>test/support/mock_online.rb</code> (at least on newer versions of
 Rails).
 
+Note that this will mock _both_ Online::Storage and Online::Queue, unlike
+previous versions of OnlineQueue, which always used S3 when running unit
+tests.
+
 To turn off mocking, call:
 
   Online.mock!(false)

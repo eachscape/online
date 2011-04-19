@@ -1,4 +1,8 @@
 module Online::Test
+  # This class contains some state that used to be contained in global
+  # variables in SimulatedS3Object.  It has been pulled out and placed in
+  # instances of this class with very few further changes.  Eventually,
+  # this code should probably be absorbed into SimulatedS3Bucket.
   class SimulatedS3GlobalState
     def public_path(k)
       "file://localhost/#{current_bucket_path}/#{k}"
