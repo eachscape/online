@@ -34,26 +34,33 @@ module Online
     # running remotely because there are fewer instances to create. It was really slow in development
     # environmen before making this change
 
+    # :nodoc: Called interally when switching from regular to mocked buckets,
+    # and vice versa.
+    def self.clear_cached_buckets
+      @s3_instance = nil
+      @cdn_instance = nil
+      @queue_instance = nil
+    end
+
     def self.default
       Online::Storage.retryable do 
-        @@s3_instance ||= Rails.env.test? ? MockOnlineStorage.new(:s3) : Online::Storage.new(:s3)
+        @s3_instance ||= Online.storage_class.new(:s3)
       end
-      @@s3_instance
+      @s3_instance
     end
 
     def self.cdn
       Online::Storage.retryable do 
-        @@cdn_instance ||= Rails.env.test? ? MockOnlineStorage.new(:s3_cdn) : Online::Storage.new(:s3_cdn)
+        @cdn_instance ||= Online.storage_class.new(:s3_cdn)
       end
-      @@cdn_instance
+      @cdn_instance
     end
 
     def self.queue
       Online::Storage.retryable do 
-        # No matter what, this uses REAL online storage
-        @@queue_instance ||= Online::Storage.new(:queue)
+        @queue_instance ||= Online.storage_class.new(:queue)
       end
-      @@queue_instance
+      @queue_instance
     end
 
     def public_path(key)

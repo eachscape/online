@@ -2,6 +2,7 @@ require 'rubygems'
 require 'bundler/setup'
 
 require 'test/unit'
+require 'webmock/test_unit'
 require 'online'
 
 # Set up a directory that we can use to simulate S3.

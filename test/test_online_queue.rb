@@ -5,7 +5,8 @@ class TestOnlineQueue < Test::Unit::TestCase
   include OnlineQueueTests
 
   def setup
-    Online.mock!
+    Online.mock!(false)
+    WebMock.allow_net_connect!
     super
   end
 end

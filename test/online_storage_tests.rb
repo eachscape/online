@@ -2,9 +2,9 @@
 # Online::Test::MockStorage.
 module OnlineStorageTests
   def setup
-    @s3 = Online.storage_class.new(:s3)
+    @s3 = Online::Storage.default
     @s3.empty_bucket
-    @cdn = Online.storage_class.new(:s3_cdn)
+    @cdn = Online::Storage.cdn
     @cdn.empty_bucket
   end
 

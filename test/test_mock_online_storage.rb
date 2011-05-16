@@ -6,6 +6,7 @@ class TestMockOnlineStorage < Test::Unit::TestCase
 
   def setup
     Online.mock!
+    WebMock.disable_net_connect!
     super
   end
 end

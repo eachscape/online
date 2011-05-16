@@ -43,7 +43,7 @@ module Online
         when 'development'
           pieces << 'staging'
         else
-          pieces << env
+          pieces << env_and_maybe_user
         end
       else
         raise ArgumentError
@@ -56,6 +56,7 @@ module Online
     def mock!(mock=true)
       require 'online/test' unless defined?(Online::Test)
       @mocked = mock
+      Storage.clear_cached_buckets
     end
 
     # Return either Online::Storage, or a mock implementation of the same

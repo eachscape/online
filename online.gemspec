@@ -17,4 +17,5 @@ Gem::Specification.new do |s|
   s.require_paths = ["lib"]
 
   s.add_dependency('aws-s3', '>= 0.6.2')
+  s.add_development_dependency('webmock', '>= 1.6.2')
 end
