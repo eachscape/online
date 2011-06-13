@@ -23,7 +23,8 @@ module Online
     attr_writer :bucket_prefix
 
     # The directory in which to store mock S3 objects during testing.
-    attr :mock_storage_directory, :writable? => true
+    attr_reader :mock_storage_directory
+    attr_writer :mock_storage_directory
 
     # Compute a bucket name for the specified storage type.
     def bucket_name_for(storage_type)
