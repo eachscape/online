@@ -11,9 +11,10 @@ Gem::Specification.new do |s|
   s.summary     = %q{Interface to S3 storage and queuing}
   #s.description = %q{}
 
-  s.files         = `git ls-files`.split("\n")
-  s.test_files    = `git ls-files -- {test,spec,features}/*`.split("\n")
-  s.executables   = `git ls-files -- bin/*`.split("\n").map{ |f| File.basename(f) }
+  s.files         = %w(Gemfile Gemfile.lock README.rdoc Rakefile
+                       online.gemspec) + Dir['**/*.rb']
+  s.test_files    = Dir['test/**/*.rb']
+  s.executables   = []
   s.require_paths = ["lib"]
 
   s.add_dependency('aws-s3', '>= 0.6.2')
