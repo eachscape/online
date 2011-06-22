@@ -64,6 +64,11 @@ class TestOnline < Test::Unit::TestCase
        :expected => 'com.example.three.production'
      }, {
        :for => :s3,
+       :env => 'live',
+       :bucket_prefix => 'com.example.three',
+       :expected => 'com.example.three.live'
+     }, {
+       :for => :s3,
        :env => 'development',
        :bucket_prefix => 'com.example',
        :expected => "com.example.development.#{ENV['USER']}"
@@ -72,6 +77,11 @@ class TestOnline < Test::Unit::TestCase
        :env => 'test',
        :bucket_prefix => 'com.example',
        :expected => "com.example.test.#{ENV['USER']}"
+     }, {
+       :for => :s3_cdn,
+       :env => 'live',
+       :bucket_prefix => 'com.example',
+       :expected => 'com.example.cdn.live'
      }, {
        :for => :s3_cdn,
        :env => 'production',
