@@ -12,11 +12,12 @@ module Online
     # Set the default environment for running the gem.
     attr_writer :env
 
-    # The prefix to use for bucket names.  Defaults to
-    # <code>'com.eachscape'</code>, but may be overridden using
+    # The prefix to use for bucket names.  May be specified using
     # <code>ENV['ONLINE_BUCKET_PREFIX']</code>.
     def bucket_prefix
-      @bucket_prefix || ENV['ONLINE_BUCKET_PREFIX'] || 'com.eachscape'
+      @bucket_prefix || ENV['ONLINE_BUCKET_PREFIX'] or
+        raise ArgumentError.new("Please specify ONLINE_BUCKET_PREFIX in your " +
+                                "environment")
     end
 
     # Set the bucket prefix.

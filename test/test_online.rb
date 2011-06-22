@@ -7,7 +7,7 @@ class TestOnline < Test::Unit::TestCase
     @saved_mock_storage_directory = Online.mock_storage_directory
 
     # Set the values we use to compute our configuration to a known state.
-    ENV['ONLINE_BUCKET_PREFIX'] = nil
+    #ENV['ONLINE_BUCKET_PREFIX'] = nil -Leave with value from environment.
     Online.env = nil
     Online.bucket_prefix = nil
 
@@ -39,7 +39,7 @@ class TestOnline < Test::Unit::TestCase
 
   def test_bucket_prefix_should_default_to_com_eachscape
     ENV['ONLINE_BUCKET_PREFIX'] = nil
-    assert_equal 'com.eachscape', Online.bucket_prefix
+    assert_raises(ArgumentError) { Online.bucket_prefix }
   end
 
   def test_bucket_prefix_should_honor_environment_variable
@@ -65,31 +65,38 @@ class TestOnline < Test::Unit::TestCase
      }, {
        :for => :s3,
        :env => 'development',
-       :expected => "com.eachscape.development.#{ENV['USER']}"
+       :bucket_prefix => 'com.example',
+       :expected => "com.example.development.#{ENV['USER']}"
      }, {
        :for => :s3,
        :env => 'test',
-       :expected => "com.eachscape.test.#{ENV['USER']}"
+       :bucket_prefix => 'com.example',
+       :expected => "com.example.test.#{ENV['USER']}"
      }, {
        :for => :s3_cdn,
        :env => 'production',
-       :expected => 'com.eachscape.cdn.production'
+       :bucket_prefix => 'com.example',
+       :expected => 'com.example.cdn.production'
      }, {
        :for => :s3_cdn,
        :env => 'development',
-       :expected => "com.eachscape.cdn.development.#{ENV['USER']}"
+       :bucket_prefix => 'com.example',
+       :expected => "com.example.cdn.development.#{ENV['USER']}"
      }, {
        :for => :queue,
        :env => 'live',
-       :expected => 'com.eachscape.queue'
+       :bucket_prefix => 'com.example',
+       :expected => 'com.example.queue'
      }, {
        :for => :queue,
        :env => 'development',
-       :expected => 'com.eachscape.queue.staging' # Yes, staging.
+       :bucket_prefix => 'com.example',
+       :expected => 'com.example.queue.staging' # Yes, staging.
      }, {
        :for => :queue,
        :env => 'staging',
-       :expected => 'com.eachscape.queue.staging'
+       :bucket_prefix => 'com.example',
+       :expected => 'com.example.queue.staging'
      }]
 
     for example in examples

@@ -14,9 +14,8 @@ this gem:
 <code>ENV['AWS_ACCESS_KEY_ID']</code>:: Amazon credentials (required).
 <code>ENV['AWS_SECRET_ACCESS_KEY']</code>:: Amazon credentials (required).
 <code>ENV['ONLINE_BUCKET_PREFIX']</code>::
-  By default, bucket names will begin with 'com.eachscape'.  If you're
-  using your own S3 credentials, you will want to set this to something
-  based on your own domain name, such as 'com.example'.
+  By default, bucket names will begin with this prefix.  You will typically
+  want to set it to something like 'com.example'.
 <code>ENV['USER']</code>::
   This will be appended to certain bucket names in the development environment.
 <code>Rails.env</code>::
